@@ -35,8 +35,9 @@
                 TestToneLevel = -30
                 TestToneFrequency = 1000
 
-                If File.Exists(Application.ExecutablePath.Replace("exe", "cfg")) = True Then
-                    Dim lines() As String = File.ReadAllLines(Application.ExecutablePath.Replace("exe", "cfg"))
+                Dim configPath As String = Path.ChangeExtension(Application.ExecutablePath, "cfg")
+                If File.Exists(configPath) = True Then
+                    Dim lines() As String = File.ReadAllLines(configPath)
                     Dim str1 As String
                     Dim int1 As Integer
                     Dim temp() As String
@@ -207,7 +208,8 @@
                 sb.AppendLine("[TEST TONE FREQUENCY]=" & TestToneFrequency)
             End With
 
-            File.WriteAllText(Application.ExecutablePath.Replace("exe", "cfg"), sb.ToString)
+            Dim configPath As String = Path.ChangeExtension(Application.ExecutablePath, "cfg")
+            File.WriteAllText(configPath, sb.ToString)
         Catch ex As Exception
             Using New CenteredMessageBox(fMain)
                 MessageBox.Show(fMain, "Write Config Error: " & ex.Message, ProgramName)
